@@ -4,9 +4,6 @@ public class LibraryMain {
     private static LibraryManager manager;
     private static Scanner sc = new Scanner(System.in);
 
-    /**
-    * <p>26.05.13 시작</p>
-    **/
     public static void main(String[] args) {
         LibraryRepository repo = new LibraryRepository();
         manager = new LibraryManager(repo);

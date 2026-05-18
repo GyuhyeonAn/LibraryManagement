@@ -5,7 +5,10 @@ public class LibraryMain {
     private static Scanner sc = new Scanner(System.in);
 
     /**
-    * <p>26.05.13 시작</p>
+    * <p>26.05.18 시작</p>
+     *
+     * @author 안규현
+     * @version 1.2
     */
     public static void main(String[] args) {
         LibraryRepository repo = new LibraryRepository();

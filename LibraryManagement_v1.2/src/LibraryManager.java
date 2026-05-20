@@ -91,7 +91,6 @@ public class LibraryManager {
         repository.deleteBook(id);
         return bookMap.remove(id) != null;
     }
-
     /**
      * 도서 대출 처리를 수행합니다.
      * <p>도서가 대출 가능한 상태일 경우, 상태를 변경하고 현재 로그인 사용자를 대출자로 등록합니다.</p>

@@ -69,6 +69,7 @@ public class LibraryRepository {
             System.err.println("[오류] DB 저장(saveBooks) 실패: " + e.getMessage());
         }
     }
+
     /**
      * 특정 도서 ID를 받아 데이터베이스에서 해당 도서를 삭제합니다.
      * <p>성공적으로 삭제되면 true를, 해당 ID가 없거나 실패하면 false를 반환합니다.</p>

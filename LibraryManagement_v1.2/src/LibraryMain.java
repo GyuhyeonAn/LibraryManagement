@@ -16,8 +16,7 @@ public class LibraryMain {
         manager = new LibraryManager(repo);
         manager.initialize();
 
-        if (!performLogin())
-            return;
+        if (!performLogin()) { return; }
 
         User user = manager.getCurrentUser();
         System.out.println("로그인 성공! 권한: " + user.getRole());
@@ -54,7 +53,7 @@ public class LibraryMain {
             String pw = sc.nextLine();
 
             if (manager.login(id, pw)) return true;
-            System.out.println("[오류] 아이디 또는 비밀번호가 틀렸습니다.");
+
         }
     }
 

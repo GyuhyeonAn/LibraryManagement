@@ -6,6 +6,10 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LibraryManagerTest {

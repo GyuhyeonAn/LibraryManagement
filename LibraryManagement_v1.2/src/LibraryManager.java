@@ -8,6 +8,7 @@ public class LibraryManager {
     private User currentUser;
     private LibraryRepository repository;
     private int bookCount = 0;
+    int loginCount = 0;
 
     /**
      * LibraryManager 생성자입니다.
@@ -45,9 +46,14 @@ public class LibraryManager {
         // ID 앞 글자가 숫자인 경우 재입력 요청
         if (Character.isDigit(id.charAt(0))) {
             System.out.println("[오류] 다시 입력해주세요.");
-            return false;
+            loginCount++;
+            //로그인 시도 5회 실패할 경우 시스템 강제 종료
+            if (loginCount == 5) {
+                System.out.println("너무 잦은 로그인 실패");
+                System.exit(1);
+            }
+            else {return false;}
         }
-
         // 기존에 List<String>으로 받던 부분을 User로 변경
         // this.userList = repository.loadLogin(id, pw);
         User user = repository.loadUser(id, pw);
@@ -56,6 +62,8 @@ public class LibraryManager {
             this.currentUser = user; // 로그인 성공 시 현재 사용자 저장
             return true;
         }
+
+        loginCount++;
         System.out.println("[오류] 아이디 또는 비밀번호가 틀렸습니다.");
         return false;
     }

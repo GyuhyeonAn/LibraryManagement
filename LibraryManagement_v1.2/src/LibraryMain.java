@@ -36,14 +36,6 @@ public class LibraryMain {
             processCommand(choice, user.getRole());
         }
     }
-
-    /**
-     * 사용자 로그인을 수행합니다.
-     * <p>성공할 때까지 아이디와 비밀번호 입력을 반복 요청합니다.</p>
-     *
-     * @return 로그인 성공 여부 (true: 성공)
-     * @see LibraryManager#login(String, String)
-     */
     private static boolean performLogin() {
         while (true) {
             System.out.println("\n========= CSV 로그인 시스템 =========");

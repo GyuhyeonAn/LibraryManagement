@@ -42,6 +42,29 @@ class LibraryManagerTest {
         assertTrue(manager.login("admin", "1111"), "관리자 로그인이 성공해야 합니다.");
         assertFalse(manager.login("admin", "wrong"), "비밀번호가 틀리면 실패해야 합니다.");
     }
+    @Test
+    @DisplayName("로그인 실패 시 Count 증가 확인")
+    void IncreasesLoginCount() {
+        // Given: setUp()에서 초기화된 manager 사용
+        int initialCount = manager.loginCount;
+
+        // When: 존재하지 않는 잘못된 정보로 로그인 시도
+        boolean isSuccess = manager.login("wrongId", "wrongPw");
+
+        // Then: 로그인은 실패해야 하며, loginCount는 1 증가해야 함
+        assertFalse(isSuccess, "잘못된 정보이므로 로그인은 실패해야 합니다.");
+        assertEquals(initialCount + 1, manager.loginCount, "로그인 실패 시 loginCount가 증가해야 합니다.");
+    }
+    @Test
+    @DisplayName("로그인 4회 실패 시 Count 4인지 확인")
+    void loginCountTest() {
+        // When: 4회 연속 실패 시도
+        for (int i = 0; i < 4; i++) {
+            manager.login("wrongUser", "wrongPass");
+        }
+
+        assertEquals(4, manager.loginCount, "4회 실패 시 카운트가 4로 누적되어야 합니다.");
+    }
 
     @Test
     @DisplayName("현재 로그인한 사용자 정보 확인")
@@ -89,7 +112,7 @@ class LibraryManagerTest {
     @Test
     @DisplayName("도서 대출 로직 확인")
     void borrowBook() {
-        manager.login("user", "2222"); // 대출자 로그인
+        manager.login("user01", "2222"); // 대출자 로그인
 
         // 성공 케이스
         int target_id = manager.getBookCount();
@@ -106,7 +129,7 @@ class LibraryManagerTest {
     @Test
     @DisplayName("도서 반납 로직 확인")
     void returnBook() {
-        manager.login("user", "2222");
+        manager.login("user01", "2222");
         manager.borrowBook(1); // 먼저 대출
 
         // 반납 실행

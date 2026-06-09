@@ -187,6 +187,9 @@ class LibraryManagerTest {
         if (result) {
             System.out.println("[경고] SQL Injection 공격 성공: 유효하지 않은 계정으로 로그인되었습니다.");
         }
+        else {
+            System.out.println("우회실패");
+        }
     }
 
     /**

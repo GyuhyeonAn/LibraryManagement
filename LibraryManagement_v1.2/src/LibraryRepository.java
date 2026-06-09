@@ -152,7 +152,7 @@ public class LibraryRepository {
             System.out.println("[오류] 아이디 형식이 올바르지 않습니다.");
             return null;
         }
-        
+
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

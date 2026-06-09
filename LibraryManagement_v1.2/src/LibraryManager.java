@@ -55,6 +55,7 @@ public class LibraryManager {
             if (loginCount == 5) {
                 System.out.println("[오류] 너무 잦은 로그인 실패");
                 System.exit(1);
+                return false;
             }
             else {return false;}
         }

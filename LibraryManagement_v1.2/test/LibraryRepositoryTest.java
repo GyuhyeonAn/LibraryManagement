@@ -141,4 +141,35 @@ class LibraryRepositoryTest {
         // 3. 데이터베이스 카운트가 0이어야 삭제 쿼리가 완벽하게 반영된 것이다
         assertEquals(0, recordCount, "삭제 쿼리가 정상 작동했다면 해당 ID의 카운트는 0이어야 합니다.");
     }
+    @Test
+    @DisplayName("보안 테스트: 아이디 길이 제한 위반 시 로그인 차단 (4자 미만, 15자 초과)")
+    void loadUserInvalidLengthTest() {
+        //짧은 아이디와 긴 아이디로 로그인 시도
+        User shortIdUser = repository.loadUser("abc", "1234");
+        User longIdUser = repository.loadUser("abcdefghijklmnop", "1234");
+
+        //정규표현식에 걸려 DB 조회 없이 곧바로 null이 반환되어야 함.
+        assertNull(shortIdUser, "4자 미만의 아이디는 로그인에 실패해야 합니다.");
+        assertNull(longIdUser, "15자를 초과하는 아이디는 로그인에 실패해야 합니다.");
+    }
+
+    @Test
+    @DisplayName("보안 테스트: 허용되지 않은 문자(특수문자, 한글, 공백) 포함 시 로그인 차단")
+    void loadUserInvalidCharTest() {
+        //정규표현식에 위배되는 다양한 악성/오타 아이디 패턴
+        String[] invalidIds = {
+                "admin!",    // 특수문자
+                "user@123",  // 특수문자
+                "홍길동",      // 한글
+                "ad min",    // 중간 공백
+                "    ",      // 공백만 존재
+                "admin "     // 끝에 공백
+        };
+
+        //모든 케이스가 검증에 막혀 null을 반환해야 함.
+        for (String invalidId : invalidIds) {
+            User result = repository.loadUser(invalidId, "1234");
+            assertNull(result, "아이디 '" + invalidId + "'는 허용되지 않은 문자가 있어 차단되어야 합니다.");
+        }
+    }
 }

@@ -42,14 +42,18 @@ public class LibraryManager {
      * @see LibraryRepository#loadUser(String, String)
      */
     public boolean login(String id, String pw) {
-
+        // ID 입력을 안했을 경우 발생하는 에러 방지
+        if (id == null || id.trim().isEmpty()) {
+            System.out.println("[오류] ID 및 PW를 입력해주세요.");
+            return false;
+        }
         // ID 앞 글자가 숫자인 경우 재입력 요청
         if (Character.isDigit(id.charAt(0))) {
             System.out.println("[오류] 다시 입력해주세요.");
             loginCount++;
             //로그인 시도 5회 실패할 경우 시스템 강제 종료
             if (loginCount == 5) {
-                System.out.println("너무 잦은 로그인 실패");
+                System.out.println("[오류] 너무 잦은 로그인 실패");
                 System.exit(1);
             }
             else {return false;}
